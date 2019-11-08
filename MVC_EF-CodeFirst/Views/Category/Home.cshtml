@@ -1,0 +1,57 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<MVC_EF_CodeFirst.Models.Product>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Product List</h2>
+
+<p>
+    @Html.ActionLink("Add Product", "CreateProduct") |
+    @Html.ActionLink("Add Category", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductCategory.CategoryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductCategory.CategoryName)
+        </th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCategory.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCategory.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })

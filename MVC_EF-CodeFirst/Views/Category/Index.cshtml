@@ -1,0 +1,45 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<MVC_EF_CodeFirst.Models.Category>
+
+@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category List</h2>
+
+<p>
+    @Html.ActionLink("Add Category", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CategoryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CategoryName)
+        </th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
