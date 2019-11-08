@@ -3,7 +3,7 @@ using System.Web.Optimization;
 
 namespace MVC_EF_CodeFirst
 {
-    public class BundleConfig
+    public static class BundleConfig
     {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
