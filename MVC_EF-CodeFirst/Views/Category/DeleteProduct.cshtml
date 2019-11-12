@@ -18,7 +18,7 @@
             @Html.DisplayFor(model => model.ProductName)
         </dd>
     </dl>
-    @Html.DropDownListFor(model => model.CategoryId,new SelectList(Model.ProductCategory,"CategoryId","CategoryName"),"Select Category")
+    @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.ProductCategory, "CategoryId", "CategoryName"), "Select Category")
 
     @using (Html.BeginForm())
     {
@@ -26,7 +26,8 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Home")
         </div>
     }
+
 </div>

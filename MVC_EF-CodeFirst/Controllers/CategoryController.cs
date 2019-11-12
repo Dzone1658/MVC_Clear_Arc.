@@ -1,14 +1,12 @@
-﻿using AutoMapper;
-using MVC_EF_CodeFirst.Models;
-using MVC_EF_CodeFirst.Models.Context;
-using PagedList;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+
+using MVC_EF_CodeFirst.Models;
+using MVC_EF_CodeFirst.Models.Context;
+
+using PagedList;
 
 namespace MVC_EF_CodeFirst.Controllers
 {
@@ -21,6 +19,7 @@ namespace MVC_EF_CodeFirst.Controllers
             _dbContext = new EfDbContext();
         }
         // GET: Category
+        [HttpGet]
         public ActionResult Index(int? page)
         {
             var categoryList = _dbContext.Categories.ToList().ToPagedList(page ?? 1, 5);
@@ -28,6 +27,7 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Category/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +46,7 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Category/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
 
@@ -71,6 +72,7 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Category/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             Category category = _dbContext.Categories.Find(id);
@@ -99,6 +101,7 @@ namespace MVC_EF_CodeFirst.Controllers
         /// <returns></returns>
 
         // GET: Product/List
+        [HttpGet]
         public ActionResult Home(int? page)
         {
             var model = _dbContext.Products.Include(c => c.ProductCategory).ToList().ToPagedList(page ?? 1, 5);
@@ -106,6 +109,7 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Product/Create
+        [HttpGet]
         public ActionResult CreateProduct()
         {
             ProductCategoryViewModel viewModel = new ProductCategoryViewModel
@@ -135,6 +139,7 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Product/Edit/5
+        [HttpGet]
         public ActionResult EditProduct(int? id)
         {
             ProductCategoryViewModel viewModel = new ProductCategoryViewModel
@@ -149,18 +154,20 @@ namespace MVC_EF_CodeFirst.Controllers
 
         // POST: Product/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditProduct(ProductCategoryViewModel viewModel)
         {
+            Product product = _dbContext.Products.Single(p => p.ProductId == viewModel.ProductId);
+            product.ProductName = viewModel.ProductName;
+            product.ProductCategory.CategoryId = viewModel.CategoryId;
             if (ModelState.IsValid)
             {
-                Product product = new Product
-                {
-                    ProductId = viewModel.ProductId,
-                    ProductName = viewModel.ProductName,
-                    ProductCategory = _dbContext.Categories.FirstOrDefault(p => p.CategoryId == viewModel.CategoryId)
-                };
-                product.ProductName = _dbContext.Products.FirstOrDefault(p => p.ProductName == viewModel.ProductName).ProductName;
-                product.ProductCategory.CategoryName = _dbContext.Categories.FirstOrDefault(c => c.CategoryId == viewModel.CategoryId).CategoryName;
+                _dbContext.Entry(product).State = EntityState.Modified;
+                //viewModel.ProductId = _dbContext.Products.FirstOrDefault(p => p.ProductId == viewModel.ProductId).ProductId;
+                //viewModel.ProductName = _dbContext.Products.FirstOrDefault(p => p.ProductId);
+                //ProductCategory = _dbContext.Categories.FirstOrDefault(p => p.CategoryId == viewModel.CategoryId)
+                //product.ProductName = _dbContext.Products.Where(p => p.ProductId == viewModel.ProductId).Include(p => viewModel.ProductId).FirstOrDefault().ProductName;
+                //product.ProductCategory = _dbContext.Categories.Where(c => c.CategoryId == viewModel.CategoryId).FirstOrDefault();
                 _dbContext.SaveChanges();
                 return RedirectToAction("Home", HttpStatusCode.OK);
             }
@@ -168,13 +175,15 @@ namespace MVC_EF_CodeFirst.Controllers
         }
 
         // GET: Product/Delete/5
+        [HttpGet]
         public ActionResult DeleteProduct(int? id)
         {
             ProductCategoryViewModel viewModel = new ProductCategoryViewModel
             {
                 ProductId = (int)id,
+                ProductName = _dbContext.Products.FirstOrDefault(p => p.ProductId == id).ProductName,
             };
-            return View(viewModel);
+            return View("Home",viewModel);
         }
 
         // POST: Product/Delete/5
