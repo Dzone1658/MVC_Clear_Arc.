@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-
 using MVC_EF_CodeFirst.Models;
 using MVC_EF_CodeFirst.Models.Context;
 
@@ -157,17 +156,16 @@ namespace MVC_EF_CodeFirst.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditProduct(ProductCategoryViewModel viewModel)
         {
-            Product product = _dbContext.Products.Single(p => p.ProductId == viewModel.ProductId);
-            product.ProductName = viewModel.ProductName;
-            product.ProductCategory.CategoryId = viewModel.CategoryId;
             if (ModelState.IsValid)
             {
+                Product product = new Product()
+                {
+                    ProductId = viewModel.ProductId,
+                    ProductName = viewModel.ProductName,
+                    ProductCategory = _dbContext.Categories.Where(c => c.CategoryId == viewModel.CategoryId).FirstOrDefault()
+                };
+                viewModel.ProductId = _dbContext.Products.FirstOrDefault(p => p.ProductId == product.ProductId).ProductId;
                 _dbContext.Entry(product).State = EntityState.Modified;
-                //viewModel.ProductId = _dbContext.Products.FirstOrDefault(p => p.ProductId == viewModel.ProductId).ProductId;
-                //viewModel.ProductName = _dbContext.Products.FirstOrDefault(p => p.ProductId);
-                //ProductCategory = _dbContext.Categories.FirstOrDefault(p => p.CategoryId == viewModel.CategoryId)
-                //product.ProductName = _dbContext.Products.Where(p => p.ProductId == viewModel.ProductId).Include(p => viewModel.ProductId).FirstOrDefault().ProductName;
-                //product.ProductCategory = _dbContext.Categories.Where(c => c.CategoryId == viewModel.CategoryId).FirstOrDefault();
                 _dbContext.SaveChanges();
                 return RedirectToAction("Home", HttpStatusCode.OK);
             }
@@ -183,7 +181,7 @@ namespace MVC_EF_CodeFirst.Controllers
                 ProductId = (int)id,
                 ProductName = _dbContext.Products.FirstOrDefault(p => p.ProductId == id).ProductName,
             };
-            return View("Home",viewModel);
+            return View("Home", viewModel);
         }
 
         // POST: Product/Delete/5
