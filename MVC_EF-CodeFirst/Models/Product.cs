@@ -24,5 +24,6 @@ namespace MVC_EF_CodeFirst.Models
         public string ProductName { get; set; }
 
         public Category ProductCategory { get; set; }
+
     }
 }

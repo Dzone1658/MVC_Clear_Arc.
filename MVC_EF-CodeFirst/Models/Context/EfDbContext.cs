@@ -12,7 +12,6 @@ namespace MVC_EF_CodeFirst.Models.Context
     {
         public EfDbContext() : base("DbConnectionString")
         {
-            //Database.SetInitializer(new DropCreateDatabaseAlways<EfDbContext>());
         }
 
         public DbSet<Category> Categories { get; set; }

@@ -18,7 +18,7 @@
             @Html.DisplayFor(model => model.ProductName)
         </dd>
     </dl>
-    @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.ProductCategory, "CategoryId", "CategoryName"), "Select Category")
+    @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.ProductCategory, "CategoryId", "CategoryName", Model.CategoryId), "--- Select Category ---")
 
     @using (Html.BeginForm())
     {

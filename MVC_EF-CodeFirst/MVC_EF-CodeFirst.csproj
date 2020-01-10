@@ -16,6 +16,7 @@
     <RootNamespace>MVC_EF_CodeFirst</RootNamespace>
     <AssemblyName>MVC_EF-CodeFirst</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <!--<TargetFrameworkMoniker>.NETFramework,Version=v2.0</TargetFrameworkMoniker>-->
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
