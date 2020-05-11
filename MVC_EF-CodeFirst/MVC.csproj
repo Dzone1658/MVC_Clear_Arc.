@@ -140,15 +140,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910301259300_IntialDb.cs" />
-    <Compile Include="Migrations\201910301259300_IntialDb.Designer.cs">
-      <DependentUpon>201910301259300_IntialDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Context\EfDbContext.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductCategoryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -247,9 +239,18 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910301259300_IntialDb.resx">
-      <DependentUpon>201910301259300_IntialDb.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Application\Application.csproj">
+      <Project>{b5cab1b8-43b3-416b-94cd-b34d67a132cc}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8aa9564a-4ac2-4aec-a632-6f34a372be7b}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infra.Data\Infra.Data.csproj">
+      <Project>{C4018351-0145-48FB-91EE-183E5CD9CE01}</Project>
+      <Name>Infra.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

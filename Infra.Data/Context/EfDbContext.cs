@@ -1,12 +1,7 @@
-﻿using MVC_EF_CodeFirst.Migrations;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
+using Domain.Models;
 
-namespace MVC_EF_CodeFirst.Models.Context
+namespace Infra.Data.Context
 {
     public class EfDbContext : DbContext
     {
