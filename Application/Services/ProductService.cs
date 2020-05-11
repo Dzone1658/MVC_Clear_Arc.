@@ -7,13 +7,13 @@ using Domain.Models;
 
 namespace Application.Services
 {
-    public class ProductService : Profile, IProductService
+    public class ProductService : /*Profile, */IProductService
     {
         private readonly IProductRepository _productRepository;
 
         public ProductService(IProductRepository productRepository)
         {
-            CreateMap<ProductCategoryViewModel, Product > ( ).ReverseMap( );
+            //CreateMap<ProductCategoryViewModel, Product > ( ).ReverseMap( );
             _productRepository = productRepository;
         }
 

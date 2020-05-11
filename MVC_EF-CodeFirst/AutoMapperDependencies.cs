@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Models;
 
-namespace Infra.Ioc
+namespace MVC
 {
     public class AutoMapperDependencies : Profile
     {

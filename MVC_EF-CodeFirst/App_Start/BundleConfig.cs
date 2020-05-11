@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace MVC_EF_CodeFirst
+namespace MVC
 {
     public static class BundleConfig
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace MVC_EF_CodeFirst
+namespace MVC
 {
     public static class FilterConfig
     {

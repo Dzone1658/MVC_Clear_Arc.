@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MVC_EF_CodeFirst
+namespace MVC
 {
     public static class RouteConfig
     {
