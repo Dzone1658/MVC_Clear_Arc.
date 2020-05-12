@@ -61,16 +61,11 @@ namespace MVC.Controllers
         [HttpPost]
         public ActionResult Edit(Category category)
         {
-            if ( ModelState.IsValid )
+            if ( category != null )
             {
-                Category model = _categoryService.GetCategoryById( category.CategoryId );
-
-                if ( model != null )
-                {
-                    _categoryService.EditCategory( category );
-                    //model.CategoryName = category.CategoryName;
-                    //_dbContext.SaveChanges( );
-                }
+                _categoryService.EditCategory( category );
+                //model.CategoryName = category.CategoryName;
+                //_dbContext.SaveChanges( );
             }
             return RedirectToAction( "Index", HttpStatusCode.OK );
         }

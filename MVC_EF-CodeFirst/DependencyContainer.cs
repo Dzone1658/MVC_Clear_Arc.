@@ -14,7 +14,7 @@ namespace MVC
         public static void RegisterDependencies()
         {
             var builder = new ContainerBuilder( );
-            builder.RegisterControllers( typeof( MvcApplication ).Assembly );
+            builder.RegisterControllers( typeof( MVC_EF_CodeFirst.MvcApplication ).Assembly );
             builder.RegisterType<EfDbContext>( );
 
             //Application Layer

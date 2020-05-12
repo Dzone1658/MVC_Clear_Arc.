@@ -2,14 +2,14 @@
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace MVC
+namespace MVC_EF_CodeFirst
 {
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            DependencyContainer.RegisterDependencies( );
-            AutoMapper.Mapper.Initialize( config => config.AddProfile<AutoMapperDependencies>( ) );
+            MVC.DependencyContainer.RegisterDependencies( );
+            AutoMapper.Mapper.Initialize( config => config.AddProfile<MVC.AutoMapperDependencies>( ) );
             AreaRegistration.RegisterAllAreas( );
             FilterConfig.RegisterGlobalFilters( GlobalFilters.Filters );
             RouteConfig.RegisterRoutes( RouteTable.Routes );

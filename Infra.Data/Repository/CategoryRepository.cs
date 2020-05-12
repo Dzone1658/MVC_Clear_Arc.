@@ -45,20 +45,22 @@ namespace Infra.Data.Repository
 
         public int EditCategory(Category category)
         {
-            int nullResult = 0;
-            try
+            if ( category != null )
             {
-                var result = _efDbContext.Categories.Where( x => x.CategoryId == category.CategoryId ).FirstOrDefault( );
-                if ( result.CategoryId > 0 )
+                try
                 {
-                    return _efDbContext.SaveChanges( );
+
+                    _efDbContext.Categories.Where( x => x.CategoryName == category.CategoryName ).Select( x => x.CategoryName );
+                    var result = _efDbContext.SaveChanges( );
+                    return result;
+                }
+                catch ( Exception ex)
+                {
+
+                    throw ex;
                 }
             }
-            catch ( Exception ex )
-            {
-                throw ex;
-            }
-            return nullResult;
+            return 0;
         }
 
         public Category DeleteCategory(int? id)
