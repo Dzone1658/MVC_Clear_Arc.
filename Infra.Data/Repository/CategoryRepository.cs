@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Domain.Interfaces;
 using Domain.Models;
 using Infra.Data.Context;
@@ -24,16 +24,8 @@ namespace Infra.Data.Repository
 
         public int AddCategory(Category category)
         {
-            int result = 0;
-            try
-            {
-                _efDbContext.Categories.Add( category );
-                _efDbContext.SaveChanges( );
-            }
-            catch ( Exception ex )
-            {
-                throw ex;
-            }
+            _efDbContext.Categories.Add( category );
+            var result = _efDbContext.SaveChanges( );
             return result;
         }
 
@@ -47,31 +39,24 @@ namespace Infra.Data.Repository
         {
             if ( category != null )
             {
-                try
-                {
-
-                    _efDbContext.Categories.Where( x => x.CategoryName == category.CategoryName ).Select( x => x.CategoryName );
-                    var result = _efDbContext.SaveChanges( );
-                    return result;
-                }
-                catch ( Exception ex)
-                {
-
-                    throw ex;
-                }
+                Category model = _efDbContext.Categories.Find( category.CategoryId );
+                model.CategoryName = category.CategoryName;
+                var result = _efDbContext.SaveChanges( );
+                return result;
             }
             return 0;
         }
 
-        public Category DeleteCategory(int? id)
+        public int DeleteCategory(int? id)
         {
-            var result = _efDbContext.Categories.Find( id );
-            if ( result.CategoryId > 0 )
+            var getResult = _efDbContext.Categories.Find( id );
+            if ( getResult != null )
             {
-                var removeRecord = _efDbContext.Categories.Remove( result );
-                return removeRecord;
+                _efDbContext.Categories.Remove( getResult );
+                var result = _efDbContext.SaveChanges( );
+                return result;
             }
-            return null;
+            return 0;
         }
     }
 }

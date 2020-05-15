@@ -38,7 +38,7 @@ namespace Application.Services
             return result;
         }
 
-        public Category DeleteCategory(int? id)
+        public int DeleteCategory(int? id)
         {
             var result = _categoryRepository.DeleteCategory( id );
             return result;

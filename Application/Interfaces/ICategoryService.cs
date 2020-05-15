@@ -11,6 +11,6 @@ namespace Application.Interfaces
         Category GetCategoryById(int? id);
         
         int EditCategory(Category category);
-        Category DeleteCategory(int? id);
+        int DeleteCategory(int? id);
     }
 }

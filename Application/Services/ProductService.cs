@@ -16,15 +16,20 @@ namespace Application.Services
             _productRepository = productRepository;
         }
 
-        public List<Product> GetProductCategory()
+        public List<Product> GetProduct()
         {
-            var list = _productRepository.GetProductCategory( );
+            var list = _productRepository.GetProduct( );
             //if ( list != null && list.Count > 0 )
             //    return AutoMapper.Mapper.Map<List<Product>, List<ProductCategoryViewModel>/*, List<Product>*/>( list );
             //else
             //    return List<ProductCategoryViewModel>( );
 
             return list;
+        }
+
+        public ProductCategoryViewModel GetProductCategory()
+        {
+            throw new System.NotImplementedException( );
         }
     }
 }

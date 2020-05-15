@@ -16,10 +16,16 @@ namespace Infra.Data.Repository
             _efDbContext = efDbContext;
         }
 
-        public List<Product> GetProductCategory()
+        public List<Product> GetProduct()
         {
             var list = _efDbContext.Products.Include( x => x.ProductCategory ).ToList( );
             return list;
+        }
+
+        public Product GetProductCategory()
+        {
+            var result = _efDbContext.Products.ToList( );
+            return result;
         }
     }
 }

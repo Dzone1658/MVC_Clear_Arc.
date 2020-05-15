@@ -5,6 +5,7 @@ namespace Domain.Interfaces
 {
     public interface IProductRepository
     {
-        List<Product> GetProductCategory();
+        List<Product> GetProduct();
+        Product GetProductCategory();
     }
 }

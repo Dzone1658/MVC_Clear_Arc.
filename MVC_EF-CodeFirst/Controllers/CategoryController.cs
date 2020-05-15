@@ -5,14 +5,12 @@ using System.Web.Mvc;
 using Application.Interfaces;
 using Application.ViewModels;
 using Domain.Models;
-using Infra.Data.Context;
 using PagedList;
 
 namespace MVC.Controllers
 {
     public class CategoryController : Controller
     {
-        //private readonly EfDbContext _dbContext;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
 
@@ -20,15 +18,18 @@ namespace MVC.Controllers
         {
             this._productService = productService;
             this._categoryService = categoryService;
-            //_dbContext = new EfDbContext( );
         }
 
         // GET: Category
         [HttpGet]
         public ActionResult Index(int? page)
         {
-            var categoryList = _categoryService.GetCategories( ).ToPagedList( page ?? 1, 5 );
-            return View( categoryList );
+            if ( ModelState.IsValid )
+            {
+                var categoryList = _categoryService.GetCategories( ).ToPagedList( page ?? 1, 5 );
+                return View( categoryList );
+            }
+            return View( HttpStatusCode.BadRequest );
         }
 
         // GET: Category/Create
@@ -45,16 +46,21 @@ namespace MVC.Controllers
             if ( category != null )
             {
                 _categoryService.AddCategory( category );
+                return RedirectToAction( "Index" );
             }
-            return RedirectToAction( "Index" );
+            return Json( new JsonResult { Data = "Not found" } );
         }
 
         // GET: Category/Edit/5
         [HttpGet]
         public ActionResult Edit(int? id)
         {
-            var result = _categoryService.GetCategoryById( id );
-            return View( result );
+            if ( id > 0 )
+            {
+                var result = _categoryService.GetCategoryById( id );
+                return View( result );
+            }
+            return View( HttpStatusCode.BadRequest );
         }
 
         // POST: Category/Edit/5
@@ -64,8 +70,6 @@ namespace MVC.Controllers
             if ( category != null )
             {
                 _categoryService.EditCategory( category );
-                //model.CategoryName = category.CategoryName;
-                //_dbContext.SaveChanges( );
             }
             return RedirectToAction( "Index", HttpStatusCode.OK );
         }
@@ -74,8 +78,12 @@ namespace MVC.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            var result = _categoryService.GetCategoryById( id );
-            return View( result );
+            if ( id > 0 )
+            {
+                var result = _categoryService.GetCategoryById( id );
+                return View( result );
+            }
+            return View( HttpStatusCode.NotFound );
         }
 
         // POST: Category/Delete/5
@@ -87,8 +95,9 @@ namespace MVC.Controllers
             if ( ModelState.IsValid )
             {
                 _categoryService.DeleteCategory( id );
+                return RedirectToAction( "Index", HttpStatusCode.OK );
             }
-            return RedirectToAction( "Index" );
+            return View( HttpStatusCode.BadRequest );
         }
 
         /// <summary>
@@ -96,12 +105,16 @@ namespace MVC.Controllers
         /// </summary>
         /// <returns></returns>
 
-        // GET: Product/List
+        //GET: Product/List
         //[HttpGet]
         //public ActionResult Home(int? page)
         //{
-        //    var model = _dbContext.Products.Include( c => c.ProductCategory ).ToList( ).ToPagedList( page ?? 1, 5 );
-        //    return View( model );
+        //    if ( ModelState.IsValid )
+        //    {
+        //        var model = _productService.GetProductCategory( ).ToPagedList( page ?? 1, 5 );
+        //        return View( model );
+        //    }
+        //    return View( HttpStatusCode.BadRequest );
         //}
 
         //// GET: Product/Create
